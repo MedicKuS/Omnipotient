@@ -1,26 +1,31 @@
 from pygame import *
 import sys
 
+'''класс инициализации меню'''
 class Menu:
+    '''функция получения списка меню'''
     def __init__(self, items = [200, 200, 'item', (120,120,120), (255,0,0), 0]):
         self.items = items
+    '''функия инициализации меню с отображением активной кнопки'''
     def render(self, layout, font, act_item):
         for i in self.items:
             if act_item == i[5]:
                 layout.blit(font.render(i[2], 1, i[4]), (i[0], i[1]))
             else:
                 layout.blit(font.render(i[2], 1, i[3]), (i[0], i[1]))
+    '''функция цикла сцены, которая вызывает меню'''
     def menu(self):
         done = True
-        menu_font = font.Font('9921.otf', 50)
+        menu_font = font.Font('9921.otf', 50) # шрифт
         item = 0
         while done:
             logo = image.load('image/menu/mainWindow.png')  # Фон меню
-            mp = mouse.get_pos()
+            mp = mouse.get_pos() #задание позиции мыши и изменения цвета кнопки
             for i in self.items:
                 if mp[0] > i[0] and mp[0] < i[0] + 155 and mp[1] > i[1] and mp[1] < i[1] + 50:
                     item = i[5]
             self.render(logo, menu_font, item)
+            '''события при нажатиии кнопок или мыши'''
             for ev in event.get():
                 if ev.type == QUIT:
                     sys.exit()
@@ -47,21 +52,23 @@ class Sprite:
         self.x = xpos
         self.y = ypos
         self.bitmap = image.load(filename)
-
     def render(self):
         scene.blit(self.bitmap, (self.x, self.y))
 
 scene = display.set_mode((1000, 673)) # Создание пустого рабочего окна
 logo = image.load('image/logo.ico')
-display.set_icon(logo)
+display.set_icon(logo) #Логотип (иконка) игры
 display.set_caption('Omnipotient') # Название игры
-font.init()
+font.init() # иницализация шрифтов
+''' список кнопок в меню (x, y, name, color_def, act_color, num) '''
 items = [
     (750, 270, 'Game', (120,120,120), (255,0,0), 0),
     (760, 320, 'Quit', (120,120,120), (255,0,0), 1)
 ]
+'''инициализация меню'''
 gameMenu = Menu(items)
 gameMenu.menu()
+
 # Бесконечный цикл для корректной работы программы (чтобы не закрывалось окно)
 process = True
 while process:
