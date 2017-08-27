@@ -65,10 +65,12 @@ class Level1:
         init = True
         while init:
             logo = image.load('image/intro/intro.png')
+            dialog_hero = image.load('image/intro/dialog_ghero.png')
             for i in event.get():
                 if i.type == QUIT:
                     init = False
             self.dialog(menu_font)
+            logo.blit(dialog_hero, (0, 500))
             scene.blit(logo, (0, 0))
             display.flip()
 
@@ -103,7 +105,7 @@ text = [
     (300, 5, 'Если на вас будет покушение - убейте его и взорвите отель.', (5, 5, 5), 9),
     (300, 5, 'Блять...', (5, 5, 5), 10),
     (300, 5, 'Не ной. Задание простое. На месте напарник тебя уже будет ждать. Он знает, как ты выглядишь. Удачи.', (5, 5, 5), 11),
-    (300, 5, '...', (5, 5, 5), 12),
+    (300, 5, '...', (5, 5, 5), 12)
 ]
 gameLevel1 = Level1(text)
 gameLevel1.level1()
