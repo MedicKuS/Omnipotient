@@ -48,29 +48,26 @@ class Menu:
 class Level1:
     def __init__(self, text = [0 , 0, 'text', (0, 0, 0), 0]):
         self.text = text
-    def dialog(self, font):
-        dialog_hero = image.load('image/intro/dialog_ghero.png')
-        dialog_phone = image.load('image/intro/dialog_phone.png')
-        speaker = True
-        for i in self.text:
-            if speaker == True:
-                dialog_phone.blit(font.render(i[2], 1, i[3]), (i[0], i[1]))
-                logo.blit(dialog_phone, (0, 500))
-                speaker = False
-            else:
-                dialog_hero.blit(font.render(i[2], 1, i[3]), (i[0], i[1]))
-                logo.blit(dialog_hero,(0, 500))
-                speaker = True
+    def render(self, layout, font):
+        i = self.text[0]
+        layout.blit(font.render(i[2], 1, i[3]), (i[0], i[1]))
     def level1(self):
         init = True
         while init:
+            boll = True
             logo = image.load('image/intro/intro.png')
             dialog_hero = image.load('image/intro/dialog_ghero.png')
+            dialog_phone = image.load('image/intro/dialog_phone.png')
             for i in event.get():
                 if i.type == QUIT:
                     init = False
-            self.dialog(menu_font)
-            logo.blit(dialog_hero, (0, 500))
+            if boll == True:
+                self.render(dialog_phone, menu_font)
+
+                logo.blit(dialog_phone, (0, 500))
+            else:
+                self.render(dialog_hero, menu_font)
+                logo.blit(dialog_hero, (0, 500))
             scene.blit(logo, (0, 0))
             display.flip()
 
