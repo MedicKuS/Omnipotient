@@ -16,7 +16,6 @@ class Menu:
     '''функция цикла сцены, которая вызывает меню'''
     def menu(self):
         done = True
-        menu_font = font.Font('9921.otf', 50) # шрифт
         item = 0
         while done:
             logo = image.load('image/menu/mainWindow.png')  # Фон меню
@@ -45,21 +44,43 @@ class Menu:
                         sys.exit()
             scene.blit(logo, (0, 0))
             display.flip()
+# первая сцена(демо)
+class Level1:
+    def __init__(self, text = [0 , 0, 'text', (0, 0, 0), 0]):
+        self.text = text
+    def dialog(self, font):
+        dialog_hero = image.load('image/intro/dialog_ghero.png')
+        dialog_phone = image.load('image/intro/dialog_phone.png')
+        speaker = True
+        for i in self.text:
+            if speaker == True:
+                dialog_phone.blit(font.render(i[2], 1, i[3]), (i[0]), i[1])
+                logo.blit(dialog_phone, (0, 500))
+    def render(self, layout, font):
+        for i in self.text:
+            layout.blit(font.render(i[2], 1, i[3]), (i[0], i[1]))
+    def level1(self):
+        init = True
+        while init:
+            logo = image.load('image/intro/intro.png')
+            dialog_hero = image.load('image/intro/dialog_ghero.png')
+            dialog_phone = image.load('image/intro/dialog_phone.png')
+            for i in event.get():
+                if i.type == QUIT:
+                    init = False
+            self.render(dialog_hero, menu_font)
+            logo.blit(dialog_hero, (0, 500))
+            scene.blit(logo, (0, 0))
+            display.flip()
 
-# Загрузка картинок
-class Sprite:
-    def __init__(self, xpos, ypos, filename):
-        self.x = xpos
-        self.y = ypos
-        self.bitmap = image.load(filename)
-    def render(self):
-        scene.blit(self.bitmap, (self.x, self.y))
-
+'''главный блок программы'''
 scene = display.set_mode((1000, 673)) # Создание пустого рабочего окна
 logo = image.load('image/logo.ico')
 display.set_icon(logo) #Логотип (иконка) игры
 display.set_caption('Omnipotient') # Название игры
 font.init() # иницализация шрифтов
+menu_font = font.Font('9921.otf', 50) # шрифт
+
 ''' список кнопок в меню (x, y, name, color_def, act_color, num) '''
 items = [
     (750, 270, 'Game', (120,120,120), (255,0,0), 0),
@@ -69,13 +90,23 @@ items = [
 gameMenu = Menu(items)
 gameMenu.menu()
 
-# Бесконечный цикл для корректной работы программы (чтобы не закрывалось окно)
-process = True
-while process:
-    for i in event.get():
-        if i.type == QUIT:
-            process = False
-            square_run = True
+'''инициализация 1 уровня (демо) *1 диалог'''
+text = [
+    (300, 5, 'звонок', (5, 5, 5), 0),
+    (300, 5, 'Да?', (5, 5, 5), 1),
+    (300, 5, 'Это я, у меня есть поручение для тебя.', (5, 5, 5), 2),
+    (300, 5, 'Я уже ожидаю худшего.', (5, 5, 5), 3),
+    (300, 5, 'Да потерпи ты. Наш уговор в силе, и тебе осталось совсем чуть-чуть. Нужно совершить сделку в отеле Монтана, с директором.', (5, 5, 5), 4),
+    (300, 5, 'Надеюсь, я сам буду?', (5, 5, 5), 5),
+    (300, 5, 'Нет, с тобой будет мой человек. Его нужно многому учить, но стреляет он неплохо.', (5, 5, 5), 6),
+    (300, 5, 'Блять...', (5, 5, 5), 7),
+    (300, 5, '...Наш клиент последнее время очень не доволен нашими условиями и, по слухам, плохо о нас высказывается.', (5, 5, 5), 8),
+    (300, 5, 'Если на вас будет покушение - убейте его и взорвите отель.', (5, 5, 5), 9),
+    (300, 5, 'Блять...', (5, 5, 5), 10),
+    (300, 5, 'Не ной. Задание простое. На месте напарник тебя уже будет ждать. Он знает, как ты выглядишь. Удачи.', (5, 5, 5), 11),
+    (300, 5, '...', (5, 5, 5), 12),
+]
+gameLevel1 = Level1(text)
+gameLevel1.level1()
 
-    display.flip()
-    font.quit()
+font.quit()
