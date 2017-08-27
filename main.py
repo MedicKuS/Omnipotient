@@ -52,17 +52,20 @@ class Menu:
             display.flip()
 # первая сцена(демо)
 class Level1:
+    '''инициализация диалогов'''
     def __init__(self, text = [0 , 0, 'text', (0, 0, 0), 0]):
         self.text = text
+    '''основной цикл'''
     def level1(self):
         dialog_font = font.Font('9921.otf', 24) # шрифт
         init = True
         boll = True
         n = 0
         while init:
-            logo = image.load('image/intro/intro.png')
-            dialog_hero = image.load('image/intro/dialog_ghero.png')
-            dialog_phone = image.load('image/intro/dialog_phone.png')
+            logo = image.load('image/intro/intro.png') # фон
+            dialog_hero = image.load('image/intro/dialog_ghero.png') # фон диалога с ГГ
+            dialog_phone = image.load('image/intro/dialog_phone.png') # фон диалога Босса
+            '''переключение реплик'''
             if boll == True:
                 i = self.text[n]
                 dialog_phone.blit(dialog_font.render(i[2], 1, i[3]), (i[0], i[1]))
@@ -75,13 +78,14 @@ class Level1:
                 logo.blit(dialog_hero, (0, 500))
                 scene.blit(logo, (0, 0))
                 display.flip()
+            '''подключение клавиатуры'''
             for ev in event.get():
                 if ev.type == QUIT:
                     init = False
                 if ev.type == KEYDOWN:
-                    if ev.key == K_ESCAPE:
+                    if ev.key == K_ESCAPE: # выход в меню
                         gameMenu.menu()
-                    if ev.key == K_SPACE:
+                    if ev.key == K_SPACE: # смена диалога по нажатию Пробела
                         if boll == True:
                             boll = False
                             if n < 12:
