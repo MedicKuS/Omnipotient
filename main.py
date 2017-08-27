@@ -54,22 +54,21 @@ class Level1:
         speaker = True
         for i in self.text:
             if speaker == True:
-                dialog_phone.blit(font.render(i[2], 1, i[3]), (i[0]), i[1])
+                dialog_phone.blit(font.render(i[2], 1, i[3]), (i[0], i[1]))
                 logo.blit(dialog_phone, (0, 500))
-    def render(self, layout, font):
-        for i in self.text:
-            layout.blit(font.render(i[2], 1, i[3]), (i[0], i[1]))
+                speaker = False
+            else:
+                dialog_hero.blit(font.render(i[2], 1, i[3]), (i[0], i[1]))
+                logo.blit(dialog_hero,(0, 500))
+                speaker = True
     def level1(self):
         init = True
         while init:
             logo = image.load('image/intro/intro.png')
-            dialog_hero = image.load('image/intro/dialog_ghero.png')
-            dialog_phone = image.load('image/intro/dialog_phone.png')
             for i in event.get():
                 if i.type == QUIT:
                     init = False
-            self.render(dialog_hero, menu_font)
-            logo.blit(dialog_hero, (0, 500))
+            self.dialog(menu_font)
             scene.blit(logo, (0, 0))
             display.flip()
 
