@@ -108,6 +108,10 @@ logo = image.load('image/logo.ico')
 display.set_icon(logo) #Логотип (иконка) игры
 display.set_caption('Omnipotient') # Название игры
 font.init() # иницализация шрифтов
+'''загрузка музыки'''
+init()
+mixer.music.load('media/omnipotient_intro.ogg')
+mixer.music.play(1)
 
 ''' список кнопок в меню (x, y, name, color_def, act_color, num) '''
 items = [
@@ -146,5 +150,5 @@ text = [
 ]
 gameLevel1 = Level1(text)
 gameLevel1.level1()
-
+mixer.music.stop()
 font.quit()
